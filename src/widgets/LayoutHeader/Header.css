@@ -1,0 +1,24 @@
+.header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 0;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 1.75rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
