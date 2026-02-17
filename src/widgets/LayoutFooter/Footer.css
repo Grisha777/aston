@@ -1,10 +1,10 @@
 footer {
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--line-color);
   padding: 1.5rem 0;
 }
 
 footer h1 {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--color);
   line-height: 1.5;
 }
