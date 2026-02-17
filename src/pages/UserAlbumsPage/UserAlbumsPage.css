@@ -1,0 +1,33 @@
+.user-albums-page {
+  padding: 2rem 0;
+}
+
+.albums-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.album-card {
+  background-color: var(--background-primary);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.album-card:hover {
+  transform: translateY(-5px);
+}
+
+.album-title {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem 0;
+}
+
+.album-meta {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}

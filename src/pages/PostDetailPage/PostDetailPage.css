@@ -1,0 +1,46 @@
+.post-detail-page {
+  padding: 2rem 0;
+}
+
+.post-detail-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.post-detail-card {
+  background-color: var(--background-primary);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.post-detail-title {
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.post-detail-body {
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-detail-meta {
+  display: flex;
+  gap: 1.5rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.comments-section {
+  margin-top: 2rem;
+}
+
+.comments-title {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
