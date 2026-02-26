@@ -1,0 +1,23 @@
+.post-card {
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+}
+
+.post-title {
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem 0;
+}
+
+.post-body {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
