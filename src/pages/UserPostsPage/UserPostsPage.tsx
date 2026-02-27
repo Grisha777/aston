@@ -1,23 +1,14 @@
-import { useParams, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { PostList } from '../../widgets/PostList/PostList';
-import type { Post } from '../../entities/post/PostTypes';
-import '../Pages.css'
+import { UserTabs } from '../../widgets/UserTabs/UserTabs';
+import { usePosts } from '../../features/PostList/model/hooks/usePosts';
 import './UserPostsPage.css';
+import '../Pages.css'
 
 export const UserPostsPage = () => {
     const { id } = useParams<{ id: string }>();
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
-        .then((res) => res.json())
-        .then((data) => {
-            setPosts(data);
-            setLoading(false);
-        });
-    }, [id]);
+    const userId = parseInt(id || '1');
+    const { posts, loading, error } = usePosts(userId);
 
     if (loading) {
         return (
@@ -28,22 +19,40 @@ export const UserPostsPage = () => {
         );
     }
 
+    if (error) {
+        return (
+        <div className="error-container">
+            <p className="error-message">Ошибка:{error}</p>
+            <Link to="/" className="error-link">
+                Обновить страницу
+            </Link>
+        </div>
+        );
+    }
+
     return (
         <div className="user-posts-page">
             <div className="page-header">
-                <h1 className="page-title">📝 Посты пользователя #{id}</h1>
-                <Link to="/" className="back-link">
-                    На главную
-                </Link>
+                <h1 className="page-title">Посты пользователя №{userId}</h1>
+                <UserTabs userId={userId}/>
+                <PostList posts={posts}/>
             </div>
-
-            {posts.length === 0 ? (
-                <div className="empty">
-                    <p>У пользователя нет постов</p>
-                </div>
-            ) : (
-                <PostList posts={posts} />
-            )}
         </div>
+        // <div className="user-posts-page">
+        //     <div className="page-header">
+        //         <h1 className="page-title">📝 Посты пользователя #{id}</h1>
+        //         <Link to="/" className="back-link">
+        //             На главную
+        //         </Link>
+        //     </div>
+
+        //     {posts.length === 0 ? (
+        //         <div className="empty">
+        //             <p>У пользователя нет постов</p>
+        //         </div>
+        //     ) : (
+        //         <PostList posts={posts} />
+        //     )}
+        // </div>
     );
 };

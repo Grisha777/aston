@@ -33,7 +33,7 @@ export const PostsPage = () => {
     if (error) {
         return (
             <div className="error-container">
-                <p className="error-message">{error}</p>
+                <p className="error-message">Ошибка:{error}</p>
                 <Link to="/" className="error-link">
                     Обновить страницу
                 </Link>
@@ -45,20 +45,18 @@ export const PostsPage = () => {
         <div className="posts-page">
             <div className="page-header">
                 <h1 className="page-title">Все посты</h1>
-                <Link to="/posts" className="view-all-link">
-                    Посмотреть все
-                </Link>
             </div>
 
-            <PostLengthFilter onFilterChange={handleFilterChange} />
+            <PostLengthFilter onFilterChange={handleFilterChange}/>
+            <PostList posts={filteredPosts}/>
 
-            {filteredPosts.length === 0 ? (
+            {/* {filteredPosts.length === 0 ? (
                 <div className="empty">
                     <p>Нет постов, соответствующих фильтру</p>
                 </div>
             ) : (
                 <PostList posts={filteredPosts} />
-            )}
+            )} */}
         </div>
     );
 };

@@ -6,7 +6,7 @@
 }
 
 .filter-title {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--text-primary);
   margin: 0 0 1rem 0;
 }
@@ -28,16 +28,17 @@
   color: var(--text-secondary);
 }
 
-.filter-input {
-  background-color: var(--background-primary);
-  border: 2px solid var(--border-color);
+.filter-select {
   padding: 0.75rem;
+  border: 2px solid var(--border-color);
   border-radius: 0.5rem;
+  background-color: var(--background-secondary);
   color: var(--text-primary);
   font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.filter-input:focus {
+.filter-select:focus {
   outline: none;
-  border-color: black;
 }
