@@ -1,0 +1,15 @@
+.error-link {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5px;
+  transition: all 0.2s;
+}
+
+.error-link:hover {
+  color: var(--line-color);
+}
+
+.posts-page {
+  padding: 2rem 0;
+}
+

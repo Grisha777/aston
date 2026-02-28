@@ -1,39 +1,52 @@
-import { useState, useEffect } from "react";
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Button } from "../Button/Button";
-import './Modal.css';
+import './Modal.css'
+import { Button } from '../Button/Button';
 
-export const Modal = () => {
-    const [isOpen, setOpen] = useState(false)
+export interface ModalProps {
+    isOpen: boolean;
+    onClose?: () => void;
+    children: React.ReactNode;
+}
 
+export const Modal = ({isOpen, onClose, children}: ModalProps) => {
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : 'unset'
-
+    
         return () => {
-            document.body.style.overflow = 'hidden'
+            document.body.style.overflow = 'unset';
         };
     },[isOpen]);
-
-    if (!isOpen) return <Button onClick={()=> setOpen(true)}>О проекте</Button>
-
+    
+    if (!isOpen) { 
+        return null;
+    }
+    
     return createPortal(
-        <div className="modal-overlay" onClick={() => setOpen(false)}>
+        <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
-                    <h2 className="modal-title">О проекте</h2>
-                    <Button onClick={() => setOpen(false)}>х</Button>
-                </div>
-                <div className="modal-body">
-                    <p><strong>Проект</strong></p>
-                    <p>Тут будет вся информаия о проекте "Посты".</p>
-                </div>
-                <div className="modal-footer">
-                    <Button onClick={() => setOpen(false)}>
-                        Закрыть
-                    </Button>
-                </div>
+                {children}
             </div>
         </div>,
         document.body
-    )
-}
+    );
+};
+
+Modal.Header = ({ children, onClose }: ModalProps) => {
+    return (
+        <div className="modal-header">
+            <h2 className="modal-title">{children}</h2>
+            {onClose && (
+                <Button onClick={onClose} className="modal-close-button">x</Button>
+            )}
+        </div>
+    );
+};
+
+Modal.Body = ({ children }: ModalProps) => {
+    return <div className="modal-body">{children}</div>;
+};
+
+Modal.Footer = ({ children }: ModalProps) => {
+    return <div className="modal-footer">{children}</div>;
+};
