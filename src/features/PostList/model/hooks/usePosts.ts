@@ -1,42 +1,44 @@
 import { useState, useEffect } from 'react';
 import type { Post } from '../../../../entities/post/PostTypes';
 
-interface UsePostsResult {
-    posts: Post[];
-    loading: boolean;
-    error: string | null;
-    refetch: () => void;
-}
-
-export const usePosts = (): UsePostsResult => {
+export const usePosts = (userId?: number) => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchPosts = async () => {
-        try {
-            setLoading(true);
-            setError(null);
-      
-            const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-            
+    useEffect(() => {
+        const controller = new AbortController();
+
+        const fetchPosts = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+
+            const url = userId
+                ? `https://jsonplaceholder.typicode.com/users/${userId}/posts`
+                : 'https://jsonplaceholder.typicode.com/posts';
+
+            const response = await fetch(url, { signal: controller.signal });
+
             if (!response.ok) {
-                throw new Error('Ошибка при загрузке постов');
+                throw new Error(`Статус ошибки: ${response.status}`);
             }
-            
+
             const data: Post[] = await response.json();
             setPosts(data);
-            
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Ошибка');
-        } finally {
-            setLoading(false);
-        }
-    };
+            } catch (error) {
+                console.error('Ошибка', error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    useEffect(() => {
         fetchPosts();
-    }, []);
 
-    return { posts, loading, error, refetch: fetchPosts };
+        return () => {
+            controller.abort();
+        };
+    }, [userId]);
+
+    return { posts, loading, error };
 };

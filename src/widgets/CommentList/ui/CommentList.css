@@ -1,7 +1,7 @@
 .comment-list {
   margin-top: 2rem;
   background-color: var(--background-comments);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   padding: 1.5rem;
 }
 
@@ -18,18 +18,19 @@
   margin: 0;
 }
 
-.comment-toggle-btn {
+.comment-toggle-button {
   background: none;
   border: none;
-  cursor: pointer;
+  margin: 0;
   font-size: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   transition: all 0.2s;
 }
 
-.comment-toggle-btn:hover {
+.comment-toggle-button:hover {
   background-color: var(--background-primary);
+  transform: translateY(0);
 }
 
 .comments-grid {
@@ -74,19 +75,19 @@
   font-size: 1rem;
 }
 
-.show-more-btn {
-  display: block;
+.show-more-button {
   width: 100%;
+  font-size: 1rem;
   background-color: var(--background-primary);
   border: 2px solid var(--border-color);
   border-radius: 0.5rem;
   padding: 0.75rem;
-  margin-top: 1rem;
+  margin: 1rem 0 0;
   color: var(--text-primary);
-  cursor: pointer;
   transition: all 0.2s;
 }
 
-.show-more-btn:hover {
+.show-more-button:hover {
   background-color: var(--background-secondary);
+  transform: translateY(0);
 }

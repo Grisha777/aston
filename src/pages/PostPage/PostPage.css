@@ -6,19 +6,10 @@
 }
 
 .error-link:hover {
-  color: white;
+  color: var(--line-color);
 }
 
 .posts-page {
   padding: 2rem 0;
 }
 
-.view-all-link {
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.view-all-link:hover {
-  color: var(--accent-hover);
-  text-decoration: underline;
-}

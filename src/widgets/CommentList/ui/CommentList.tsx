@@ -1,24 +1,23 @@
 import { useState, useCallback } from 'react';
 import type { Comment } from '../CommentTypes';
 import './CommentList.css';
+import { Button } from '../../../shared/ui/Button/Button';
 
 interface CommentListProps {
   comments: Comment[];
 }
 
 export const CommentList = ({ comments }: CommentListProps) => {
+    const commentsInPage = 3
     const [isComment, setComment] = useState(true);
-    const [visibleCount, setVisibleCount] = useState(3);
 
     const toggleCollapse = useCallback(() => {
         setComment((prev) => !prev);
     }, []);
 
-    const showMore = useCallback(() => {
-        setVisibleCount((prev) => prev + 5);
-    }, []);
-
-    const commentsToShow = isComment ? comments.slice(0, visibleCount) : comments;
+    const showControls = comments.length > commentsInPage;
+    
+    const commentsToShow = isComment ? comments.slice(0, commentsInPage) : comments;
 
     return (
         <div className="comment-list">
@@ -26,9 +25,11 @@ export const CommentList = ({ comments }: CommentListProps) => {
                 <h3 className="comment-list-title">
                     Комментарии ({comments.length})
                 </h3>
-                <button onClick={toggleCollapse} className="comment-toggle-btn">
-                    {isComment ? 'Развернуть все' : 'Свернуть'}
-                </button>
+                {showControls && (
+                    <Button onClick={toggleCollapse} className="comment-toggle-button">
+                        {isComment ? 'Развернуть все' : 'Свернуть'}
+                    </Button>
+                )}
             </div>
 
             <div className="comments-grid">
@@ -43,10 +44,10 @@ export const CommentList = ({ comments }: CommentListProps) => {
                 ))}
             </div>
 
-            {setComment && visibleCount < comments.length && (
-                <button onClick={showMore} className="show-more-btn">
-                    Показать ещё ({comments.length - visibleCount})
-                </button>
+            {isComment && showControls && (
+                <Button onClick={toggleCollapse} className="show-more-button">
+                    Показать все ({comments.length - commentsInPage})
+                </Button>
             )}
         </div>
     );

@@ -2,16 +2,10 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Button } from '../../shared/ui/Button/Button';
 import { CommentList } from '../../widgets/CommentList/ui/CommentList';
+import type { Post } from '../../entities/post/PostTypes';
 import type { Comment } from '../../widgets/CommentList/CommentTypes';
 import '../Pages.css';
 import './PostDetailPage.css';
-
-interface Post {
-    id: number;
-    title: string;
-    body: string;
-    userId: number;
-}
 
 export const PostDetailPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -19,14 +13,34 @@ export const PostDetailPage = () => {
     const [post, setPost] = useState<Post | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+      
+      useEffect(() => {
+        const controller = new AbortController();
 
-    useEffect(() => {
         const fetchPost = async () => {
         try {
+            setLoading(true);
+            setError(null);
+
             const [postRes, commentsRes] = await Promise.all([
-                fetch(`https://jsonplaceholder.typicode.com/posts/${id}`),
-                fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`),
+              fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+                signal: controller.signal,
+              }),
+              fetch(
+                `https://jsonplaceholder.typicode.com/posts/${id}/comments`,
+                {
+                  signal: controller.signal,
+                }
+              ),
             ]);
+
+            if (!postRes.ok) {
+                throw new Error(`Пост не найден (статус ${postRes.status})`);
+            }
+            if (!commentsRes.ok) {
+                throw new Error(`Ошибка загрузки комментариев (статус ${commentsRes.status})`);
+            }
 
             const postData = await postRes.json();
             const commentsData = await commentsRes.json();
@@ -41,7 +55,11 @@ export const PostDetailPage = () => {
             }
         };
 
-        fetchPost();
+        if (id) {
+            fetchPost();
+        }
+
+        return () => controller.abort();
     }, [id]);
 
     if (loading) {
@@ -53,41 +71,52 @@ export const PostDetailPage = () => {
         );
     }
 
-    if (!post) {
+    if (error || !post) {
         return (
             <div className="error-container">
-                <p className="error-message">Пост не найден</p>
-                <Button onClick={() => navigate('/posts')}>
-                    Вернуться к постам
-                </Button>
+                <h2 className="error-title">Ошибка</h2>
+                <p className="error-message">{error || 'Пост не найден'}</p>
+                <div className="error-actions">
+                    <Button onClick={() => navigate('/posts')}>
+                        Все посты
+                    </Button>
+                    {post?.userId && (
+                        <Button onClick={() => navigate(`/users/${post.userId}/posts`)}>
+                            Посты пользователя {post.userId}
+                        </Button>
+                    )}
+                </div>
             </div>
         );
     }
 
     return (
         <div className="post-detail-page">
-        <div className="post-detail-header">
-            <Link to="/posts" className="back-link">
-                Назад к постам
-            </Link>
-            <Link to={`/users/${post.userId}/posts`} className="user-link">
-                Посты пользователя {post.userId}
-            </Link>
-        </div>
+            <div className="post-detail-header">
+                <Link to="/posts" className="back-link">
+                    Назад к постам
+                </Link>
+                <Link to={`/users/${post.userId}/posts`} className="user-link">
+                    Посты пользователя {post.userId}
+                </Link>
+            </div>
 
-        <div className="post-detail-card">
-            <h1 className="post-detail-title">{post.title}</h1>
+            <div className="post-detail-card">
+                <div>
+                    <h1 className="post-detail-title">{post.title}</h1>
+                    <span className="post-title-length">{post.title.length} симв.</span>
+                </div>
                 <p className="post-detail-body">{post.body}</p>
-            <div className="post-detail-meta">
-                <span>Автор: Пользователь #{post.userId}</span>
-                <span>ID поста: #{post.id}</span>
+                <div className="post-detail-meta">
+                    <span>Автор: Пользователь #{post.userId}</span>
+                    <span>ID поста: #{post.id}</span>
+                </div>
+            </div>
+
+            <div className="comments-section">
+                <h2 className="comments-title">Комментарии ({comments.length})</h2>
+                <CommentList comments={comments} />
             </div>
         </div>
-
-        <div className="comments-section">
-            <h2 className="comments-title">💬 Комментарии ({comments.length})</h2>
-            <CommentList comments={comments} />
-        </div>
-    </div>
-  );
+    );
 };
