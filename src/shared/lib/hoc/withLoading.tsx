@@ -18,7 +18,7 @@ export const withLoading = <loadingPosts extends object>( WrappedComponent: FC<l
     }, []);
 
     if (isLoading || props.isLoading) {
-        return <div className="loading">{loadingMessage}</div>;
+        return <div className="loading-posts">{loadingMessage}</div>;
     }
 
     return <WrappedComponent {...props}/>;
