@@ -10,7 +10,7 @@
 
 .album-card {
   background-color: var(--background-primary);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   padding: 1.5rem;
   text-decoration: none;
   transition: all 0.3s;
