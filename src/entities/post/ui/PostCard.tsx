@@ -1,16 +1,19 @@
-import './PostCard.css'
+import type { Post } from '../PostTypes';
+import './PostCard.css';
 
-export interface Post {
-  id: number;
-  title: string;
-  body: string;
+interface PostCardProps {
+  post: Post;
+  onClick?: () => void;
 }
 
-export const PostCard = ({ post }: { post: Post }) => { 
+export const PostCard = ({ post, onClick }: PostCardProps) => {
   return (
-    <div className='post-card'>
-      <h2 className='post-title'>{post.title}</h2>
-      <p className='post-body'>{post.body}</p>
+    <div className="post-card" onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
+      <div className="post-header">
+        <h2 className="post-title">{post.title}</h2>
+        <span className="post-title-length">{post.title.length} символов</span>
+      </div>
+      <p className="post-body">{post.body}</p>
     </div>
   );
 };

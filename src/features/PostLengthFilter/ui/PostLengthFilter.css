@@ -1,0 +1,43 @@
+.filter-container {
+  background-color: var(--background-primary);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-title {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+}
+
+.filter-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.filter-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-label {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.filter-input {
+  background-color: var(--background-primary);
+  border: 2px solid var(--border-color);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: black;
+}
