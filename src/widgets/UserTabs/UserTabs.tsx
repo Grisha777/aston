@@ -10,7 +10,7 @@ export const UserTabs = ({ userId }: UserTabsProps) => {
     return (
       <div className="user-tabs">
         <div className="tabs-header">
-          <h2 className="tabs-title">Профиль пользователя #{userId}</h2>
+          <h2 className="tabs-title">Профиль пользователя №{userId}</h2>
         </div>
         <nav className="tabs-nav">
 

@@ -1,4 +1,3 @@
-import { usePosts } from '../../features/PostList/model/hooks/usePosts';
 import { PostList } from '../../widgets/PostList/PostList';
 import { PostLengthFilter } from '../../features/PostLengthFilter/ui/PostLengthFilter';
 import { filterByLength } from '../../features/PostLengthFilter/lib/filterByLength';
@@ -6,9 +5,10 @@ import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import '../Pages.css';
 import './PostPage.css'
+import { useGetPostsQuery } from '../../entities/post/api/postsApi';
 
 export const PostsPage = () => {
-    const { posts, loading, error } = usePosts();
+    const { data: posts = [], isLoading, isError } = useGetPostsQuery();
     const [minLength, setMinLength] = useState(0);
     const [maxLength, setMaxLength] = useState(0);
 
@@ -21,7 +21,7 @@ export const PostsPage = () => {
         setMaxLength(max);
     };
 
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="loading-container">
                 <div className="loading"></div>
@@ -30,10 +30,10 @@ export const PostsPage = () => {
         );
     }
 
-    if (error) {
+    if (isError) {
         return (
             <div className="error-container">
-                <p className="error-message">Ошибка:{error}</p>
+                <p className="error-message">Ошибка:{}</p>
                 <Link to="/" className="error-link">
                     Обновить страницу
                 </Link>
