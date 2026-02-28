@@ -19,7 +19,7 @@ const posts: Post[] = [
   { id: 8, title: 'Заголовок 8', body: 'Содержимое поста 8' },
 ];
 
-const PostListWithLoading = withLoading(PostList, 'Загрузка постов...');
+const PostListWithLoading = withLoading(PostList);
 
 export const App = () => {
   const [minLength, setMinLength] = useState(0);
