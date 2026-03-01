@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import type { Photo } from '../../entities/post/PostTypes';
+import type { Photo } from '../../entities/[entity]/model/types';
 import '../Pages.css'
 import './AlbumPhotosPage.css';
 

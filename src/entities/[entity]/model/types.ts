@@ -5,12 +5,23 @@ export interface Post {
     body: string;
 }
 
-export interface Comment {
-    id: number;
-    postId: number;
+export interface Company {
     name: string;
-    email: string;
-    body: string;
+    catchPhase: string;
+    bs: string;
+}
+
+export interface Geo {
+    lat: string;
+    lng: string; 
+}
+
+export interface Address {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+    geo: Geo;
 }
 
 export interface User {
@@ -18,20 +29,18 @@ export interface User {
     name: string;
     username: string;
     email: string;
-    // address: {
-    //     street: string;
-    //     suite: string;
-    //     city: string;
-    //     zipcode: string;
-    //     geo: { lat: string; lng: string };
-    // };
-    // phone: string;
-    // website: string;
-    // company: {
-    //     name: string;
-    //     catchPhrase: string;
-    //     bs: string;
-    // };
+    address: Address;
+    phone: string;
+    website: string;
+    company: Company;
+}
+
+export interface Comment {
+    id: number;
+    postId: number;
+    name: string;
+    email: string;
+    body: string;
 }
 
 export interface Album {

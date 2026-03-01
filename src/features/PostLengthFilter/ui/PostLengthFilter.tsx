@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, type PropsWithChildren } from 'react';
 import './PostLengthFilter.css';
 import { Button } from '../../../shared/ui/Button/Button';
 
@@ -6,7 +6,7 @@ interface PostLengthFilterProps {
     onFilterChange: (min: number, max: number) => void;
 }
 
-export const PostLengthFilter = ({ onFilterChange }: PostLengthFilterProps) => {
+export const PostLengthFilter = ({ onFilterChange }: PropsWithChildren<PostLengthFilterProps>) => {
     const [minLength, setMinLength] = useState(0);
     const [maxLength, setMaxLength] = useState(0);
 

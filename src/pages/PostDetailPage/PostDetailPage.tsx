@@ -1,81 +1,41 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { Button } from '../../shared/ui/Button/Button';
 import { CommentList } from '../../widgets/CommentList/ui/CommentList';
-import type { Post } from '../../entities/post/PostTypes';
-import type { Comment } from '../../widgets/CommentList/CommentTypes';
+import { useGetPostByIdQuery } from '../../entities/post/api/postsApi';
+import { useGetCommentsByPostIdQuery } from '../../entities/post/api/commentsApi';
 import '../Pages.css';
 import './PostDetailPage.css';
 
 export const PostDetailPage = () => {
     const { id } = useParams<{ id: string }>();
+    const postId = parseInt(id || '1');
     const navigate = useNavigate();
-    const [post, setPost] = useState<Post | null>(null);
-    const [comments, setComments] = useState<Comment[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-      
-      useEffect(() => {
-        const controller = new AbortController();
 
-        const fetchPost = async () => {
-        try {
-            setLoading(true);
-            setError(null);
+    const { data: post, isLoading: postLoading, error: postError } =  useGetPostByIdQuery(postId);
 
-            const [postRes, commentsRes] = await Promise.all([
-              fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-                signal: controller.signal,
-              }),
-              fetch(
-                `https://jsonplaceholder.typicode.com/posts/${id}/comments`,
-                {
-                  signal: controller.signal,
-                }
-              ),
-            ]);
+    const { data: comments = [], isLoading: commentsLoading } = useGetCommentsByPostIdQuery(postId, {
+            pollingInterval: 0,
+            refetchOnFocus: false,
+            refetchOnReconnect: true,
+        });
 
-            if (!postRes.ok) {
-                throw new Error(`Пост не найден (статус ${postRes.status})`);
-            }
-            if (!commentsRes.ok) {
-                throw new Error(`Ошибка загрузки комментариев (статус ${commentsRes.status})`);
-            }
+    const isLoading = postLoading || commentsLoading;
+    const error = postError;
 
-            const postData = await postRes.json();
-            const commentsData = await commentsRes.json();
-
-            setPost(postData);
-            setComments(commentsData);
-
-            } catch (error) {
-                console.error('Ошибка поиска постов', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (id) {
-            fetchPost();
-        }
-
-        return () => controller.abort();
-    }, [id]);
-
-    if (loading) {
-        return (
-            <div className="loading-container">
-                <div className="loading"></div>
-                <p>Загрузка поста...</p>
-            </div>
-        );
+    if (isLoading) {
+      return (
+        <div className="loading-container">
+          <div className="loading"></div>
+          <p>Загрузка поста...</p>
+        </div>
+      );
     }
 
     if (error || !post) {
         return (
             <div className="error-container">
                 <h2 className="error-title">Ошибка</h2>
-                <p className="error-message">{error || 'Пост не найден'}</p>
+                <p className="error-message">{}</p>
                 <div className="error-actions">
                     <Button onClick={() => navigate('/posts')}>
                         Все посты
@@ -108,8 +68,8 @@ export const PostDetailPage = () => {
                 </div>
                 <p className="post-detail-body">{post.body}</p>
                 <div className="post-detail-meta">
-                    <span>Автор: Пользователь #{post.userId}</span>
-                    <span>ID поста: #{post.id}</span>
+                    <span>Автор: Пользователь №{post.userId}</span>
+                    <span>ID поста: №{post.id}</span>
                 </div>
             </div>
 

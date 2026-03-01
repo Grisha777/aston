@@ -1,16 +1,17 @@
 import { NavLink } from 'react-router-dom';
+import type { PropsWithChildren } from 'react';
 import './UserTabs.css';
 
 interface UserTabsProps {
     userId: number;
 }
 
-export const UserTabs = ({ userId }: UserTabsProps) => {
+export const UserTabs = ({ userId }: PropsWithChildren<UserTabsProps>) => {
 
     return (
       <div className="user-tabs">
         <div className="tabs-header">
-          <h2 className="tabs-title">Профиль пользователя #{userId}</h2>
+          <h2 className="tabs-title">Профиль пользователя №{userId}</h2>
         </div>
         <nav className="tabs-nav">
 
