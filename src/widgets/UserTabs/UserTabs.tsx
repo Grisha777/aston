@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import type { PropsWithChildren } from 'react';
 import './UserTabs.css';
 
 interface UserTabsProps {
     userId: number;
 }
 
-export const UserTabs = ({ userId }: UserTabsProps) => {
+export const UserTabs = ({ userId }: PropsWithChildren<UserTabsProps>) => {
 
     return (
       <div className="user-tabs">

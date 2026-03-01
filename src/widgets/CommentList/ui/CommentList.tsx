@@ -1,13 +1,13 @@
-import { useState, useCallback } from 'react';
-import type { Comment } from '../CommentTypes';
-import './CommentList.css';
+import { useState, useCallback, type PropsWithChildren } from 'react';
 import { Button } from '../../../shared/ui/Button/Button';
+import type { Comment } from '../../../entities/[entity]/model/types';
+import './CommentList.css';
 
 interface CommentListProps {
-  comments: Comment[];
+    comments: Comment[];
 }
 
-export const CommentList = ({ comments }: CommentListProps) => {
+export const CommentList = ({ comments }: PropsWithChildren<CommentListProps>) => {
     const commentsInPage = 3
     const [isComment, setComment] = useState(true);
 

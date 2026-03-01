@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import type { Album } from '../../entities/post/PostTypes';
+import { Link } from 'react-router-dom';
+import type { Album } from '../../entities/[entity]/model/types';
 import '../Pages.css';
 import './AlbumsPage.css';
-import { Link } from 'react-router-dom';
 
 export const AlbumsPage = () => {
   const [albums, setAlbums] = useState<Album[]>([]);

@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { UserTabs } from '../../widgets/UserTabs/UserTabs';
 import { Button } from '../../shared/ui/Button/Button';
-import { useGetTodosByUserIdQuery } from '../../entities/post/api/postsApi';
+import { useGetTodosByUserIdQuery } from '../../entities/post/api/todosApi';
 import '../Pages.css'
 import './UserTodosPage.css';
 

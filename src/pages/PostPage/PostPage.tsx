@@ -1,11 +1,11 @@
+import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { PostList } from '../../widgets/PostList/PostList';
 import { PostLengthFilter } from '../../features/PostLengthFilter/ui/PostLengthFilter';
 import { filterByLength } from '../../features/PostLengthFilter/lib/filterByLength';
-import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useGetPostsQuery } from '../../entities/post/api/postsApi';
 import '../Pages.css';
 import './PostPage.css'
-import { useGetPostsQuery } from '../../entities/post/api/postsApi';
 
 export const PostsPage = () => {
     const { data: posts = [], isLoading, isError } = useGetPostsQuery();
