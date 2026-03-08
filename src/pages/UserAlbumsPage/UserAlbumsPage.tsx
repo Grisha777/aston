@@ -1,8 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { UserTabs } from '../../widgets/UserTabs/UserTabs';
+import { useGetAlbumsByUserIdQuery } from '../../entities/post/api/albumsApi';
 import '../Pages.css';
 import './UserAlbumsPage.css';
-import { useGetAlbumsByUserIdQuery } from '../../entities/post/api/postsApi';
 
 export const UserAlbumsPage = () => {
     const { id } = useParams<{ id: string }>();

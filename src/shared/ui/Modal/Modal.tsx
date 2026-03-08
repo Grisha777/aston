@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, type MouseEventHandler, type PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
-import './Modal.css'
 import { Button } from '../Button/Button';
+import './Modal.css'
 
 export interface ModalProps {
     isOpen: boolean;
-    onClose?: () => void;
+    onClose: () => void;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
     children: React.ReactNode;
 }
 
-export const Modal = ({isOpen, onClose, children}: ModalProps) => {
+export const Modal = ({isOpen, onClose, children }: PropsWithChildren<ModalProps>) => {
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : 'unset'
     
@@ -32,7 +33,7 @@ export const Modal = ({isOpen, onClose, children}: ModalProps) => {
     );
 };
 
-Modal.Header = ({ children, onClose }: ModalProps) => {
+Modal.Header = ({ children, onClose }: PropsWithChildren<ModalProps>) => {
     return (
         <div className="modal-header">
             <h2 className="modal-title">{children}</h2>
@@ -43,10 +44,10 @@ Modal.Header = ({ children, onClose }: ModalProps) => {
     );
 };
 
-Modal.Body = ({ children }: ModalProps) => {
+Modal.Body = ({ children }: PropsWithChildren<ModalProps>) => {
     return <div className="modal-body">{children}</div>;
 };
 
-Modal.Footer = ({ children }: ModalProps) => {
+Modal.Footer = ({ children }: PropsWithChildren<ModalProps>) => {
     return <div className="modal-footer">{children}</div>;
 };

@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
-import type { Post } from '../PostTypes';
+import type { MouseEventHandler, PropsWithChildren } from 'react';
+import type { Post } from '../../[entity]/model/types';
 import './PostCard.css';
 
 interface PostCardProps {
   post: Post;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-export const PostCard = ({ post, onClick }: PostCardProps) => {
+export const PostCard = ({ post, onClick }: PropsWithChildren<PostCardProps>) => {
   return (
     <div className="post-card" onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
       <div className="post-header">

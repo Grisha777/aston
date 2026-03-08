@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import type { User } from '../../entities/post/PostTypes';
-import './UsersPage.css';
+import type { User } from '../../entities/[entity]/model/types';
 import { Link } from 'react-router-dom';
+import './UsersPage.css';
 
 export const UsersPage = () => {
   const [users, setUsers] = useState<User[]>([]);

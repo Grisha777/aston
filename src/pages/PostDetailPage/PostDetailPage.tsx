@@ -1,9 +1,10 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../shared/ui/Button/Button';
 import { CommentList } from '../../widgets/CommentList/ui/CommentList';
+import { useGetPostByIdQuery } from '../../entities/post/api/postsApi';
+import { useGetCommentsByPostIdQuery } from '../../entities/post/api/commentsApi';
 import '../Pages.css';
 import './PostDetailPage.css';
-import { useGetCommentsByPostIdQuery, useGetPostByIdQuery } from '../../entities/post/api/postsApi';
 
 export const PostDetailPage = () => {
     const { id } = useParams<{ id: string }>();

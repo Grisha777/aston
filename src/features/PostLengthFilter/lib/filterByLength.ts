@@ -1,4 +1,4 @@
-import type { Post } from '../../../entities/post/PostTypes';
+import type { Post } from '../../../entities/[entity]/model/types';
 
 export const filterByLength = ( posts: Post[], minLength: number, maxLength: number ): Post[] => {
     if (minLength === 0 && maxLength === 0) {
