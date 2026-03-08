@@ -1,16 +1,16 @@
 import { Link, useParams } from 'react-router-dom';
 import { PostList } from '../../widgets/PostList/PostList';
 import { UserTabs } from '../../widgets/UserTabs/UserTabs';
-import { usePosts } from '../../features/PostList/model/hooks/usePosts';
-import './UserPostsPage.css';
+import { useGetPostsByUserIdQuery } from '../../entities/post/api/postsApi';
 import '../Pages.css'
+import './UserPostsPage.css';
 
 export const UserPostsPage = () => {
     const { id } = useParams<{ id: string }>();
     const userId = parseInt(id || '1');
-    const { posts, loading, error } = usePosts(userId);
+    const { data: posts = [], isLoading, error } = useGetPostsByUserIdQuery(userId);
 
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="loading-container">
                 <div className="loading"></div>
@@ -22,7 +22,7 @@ export const UserPostsPage = () => {
     if (error) {
         return (
         <div className="error-container">
-            <p className="error-message">Ошибка:{error}</p>
+            <p className="error-message">Ошибка:{}</p>
             <Link to="/" className="error-link">
                 Обновить страницу
             </Link>
@@ -34,24 +34,20 @@ export const UserPostsPage = () => {
         <div className="user-posts-page">
             <div className="page-header">
                 <h1 className="page-title">Посты пользователя №{userId}</h1>
+                {/* <Link to="/" className="back-link">
+                    На главную
+                </Link> */}
                 <UserTabs userId={userId}/>
                 <PostList posts={posts}/>
             </div>
         </div>
         // <div className="user-posts-page">
-        //     <div className="page-header">
-        //         <h1 className="page-title">📝 Посты пользователя #{id}</h1>
-        //         <Link to="/" className="back-link">
-        //             На главную
-        //         </Link>
-        //     </div>
-
         //     {posts.length === 0 ? (
         //         <div className="empty">
         //             <p>У пользователя нет постов</p>
         //         </div>
         //     ) : (
-        //         <PostList posts={posts} />
+        //         <PostList posts={posts}/>
         //     )}
         // </div>
     );
